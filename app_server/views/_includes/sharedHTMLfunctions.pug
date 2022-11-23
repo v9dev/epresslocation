@@ -1,0 +1,6 @@
+mixin outputRating(rating)
+    span.col-4 
+        - for (let i = 1; i <= rating; i++)
+            span.material-icons.md-dark star_rate
+        - for (let i = rating; i < 5; i++)
+            span.material-icons.md-dark star_outline

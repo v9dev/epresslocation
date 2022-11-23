@@ -1,29 +1,27 @@
 extends layout
-
+include _includes/sharedHTMLfunctions
 block content
     .row.banner
         .col-12
-            h1 Shri Ram Cafe
+            h1= pageHeader.title
     .row.row-cols-1.row-cols-md-2.g-4.text-dark
         .col
             .card
                 .card-body
                     p.row.card-text.justify-content-around.text-left
-                        span.col-12.col-md-7 Any Where Universe 0000
-                        span.col-12.col-md-4
-                            span.material-icons.md-dark star_rate
-                            span.material-icons.md-dark star_rate
-                            span.material-icons.md-dark star_rate
-                            span.material-icons.md-dark star_rate
-                            span.material-icons.md-dark star_rate
+                        span.col-12.col-md-5=location.address
+                        +outputRating(location.rating)
                         h2.card-title.col-7.row-cols-1 Opening hours
-                        p.card-text Monday - Friday : 7:00am - 7:00pm
-                        p.card-text Saturday : 8:00am - 5:00pm
-                        p.card-text Sunday : closed
+                        each time in location.openingTimes
+                            p.card-text
+                                | #{time.days} :
+                                if time.closed
+                                    | closed
+                                else
+                                    | #{time.opening} - #{time.closing}
                         h2.card-title.col-7.row-cols-1 Facilities
-                        span.col-4.material-icons.md-dark.text-center wifi
-                        span.col-4.material-icons.md-dark.text-center restaurant
-                        span.col-4.material-icons.md-dark.text-center local_bar
+                        each facility in location.facilities
+                            span.col-4.material-icons.md-dark.text-center= facility
         .col
             .card
                 .location-map
@@ -36,47 +34,14 @@ block content
                 .p.row.card-text.justify-content-around.text-left
                     h2.card-title.col-8 Customer reviews
                     a.btn.col-3.btn-primary.float-right(href='/location/review/new') Add review
-    br
 
     .row.row-cols-1.row-cols-md-2.g-4.text-dark
-        .col
-            .card
-                p.row.card-text.justify-content-around.text-left
-                    span.col-7 Suraj 
-                    span.col-4
-                        span.material-icons.md-dark star_rate
-                        span.material-icons.md-dark star_rate
-                        span.material-icons.md-dark star_rate
-                        span.material-icons.md-dark star_rate
-                        span.material-icons.md-dark star_rate
-                    span.col-11 Starcups is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.
-                br
-        .col
-            .card
-                p.row.card-text.justify-content-around.text-left
-                    span.col-7 Suraj 
-                    span.col-4
-                        span.material-icons.md-dark star_rate
-                        span.material-icons.md-dark star_rate
-                        span.material-icons.md-dark star_rate
-                        span.material-icons.md-dark star_rate
-                        span.material-icons.md-dark star_rate
-                    span.col-11 Starcups is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.
-                br
-        .col
-            .card
-                p.row.card-text.justify-content-around.text-left
-                    span.col-7 Suraj 
-                    span.col-4
-                        span.material-icons.md-dark star_rate
-                        span.material-icons.md-dark star_rate
-                        span.material-icons.md-dark star_rate
-                        span.material-icons.md-dark star_rate
-                        span.material-icons.md-dark star_rate
-                    span.col-11 Starcups is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.
-                br
-
-
-
-
-
+        each review in location.reviews
+            .col
+                .card
+                    p.row.card-text.justify-content-around.text-left
+                        span.col-3= review.author
+                        +outputRating(location.rating)
+                        span.col-3= review.timestamp
+                        span.col-11 !{(review.reviewText).replace(/\n/g, '<br/>')}
+                    br
