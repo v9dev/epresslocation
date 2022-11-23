@@ -1,0 +1,25 @@
+extends layout
+block content
+    .row.banner
+        .col-12
+            h1 Shri Ram Cafe
+    form.row.g-3(action="/location", method="get", role="form")
+        .col-md-7
+            input#name.form-control(type="text",placeholder="Name",aria-label="Name", name="name")
+        .col-md-4
+            select#rating.form-select(name="rating")
+                option 5
+                option 4
+                option 3
+                option 2
+                option 1
+        .col-md-10
+            textarea#review.form-control(name="review" rows="3")
+        .col-md-10
+            button.btn.btn-primary.float-right Add my review
+        
+
+
+
+
+
