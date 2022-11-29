@@ -42,7 +42,7 @@ const homelist = (req, res) => {
     address: '125 High Street, Reading, RG6 1PS',
     rating: 3,
     facilities: ['wifi', 'restaurant', 'local_bar'],
-    coords: {lat: 51.455041, lng: -0.9690884},
+    img:'https://source.unsplash.com/ItaV89TNkks',
     openingTimes: [
       {
         days: 'Monday - Friday',
