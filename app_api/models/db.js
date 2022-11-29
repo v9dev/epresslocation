@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const readLine = require('readline');
-require('dotenv').config();
 
 
 let dbURL = 'mongodb://127.0.0.1/expresslocation';
@@ -60,4 +59,4 @@ process.on('SIGTERM', () => {
 
 connect();
 
-require('./location');
+require('./locations');
