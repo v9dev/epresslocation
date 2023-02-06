@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const readLine = require('readline');
 
 
-let dbURL = 'mongodb+srv://thakurjp:thakur64@cluster0.ekb4npj.mongodb.net/expresslocation?retryWrites=true&w=majority';
+let dbURL = '';
 
 const connect = () => {
   setTimeout(() => mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true }), 1000);
