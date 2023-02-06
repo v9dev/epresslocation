@@ -5,20 +5,21 @@ block content
         .col-12
             h1= pageHeader.title
             small &nbsp;#{pageHeader.strapline}
+            small 
+                .error= message
     br
     .row.row-cols-1.row-cols-md-2.g-4.text-dark
         each location in locations
             .col
                 .card
-                    a(href="/location") 
-                        img.card-img-top(src= location.img , alt="...")
+                    a(href=`/location/${location._id}`) 
+                        img.card-img-top(src=location.img , alt="...")
                     .card-body
                         h5.card-title.col-6=location.name
-                        p.row.card-text.justify-content-around.text-left
-                            span.col-9= location.address
-                            span.col-2.badge.text-bg-dark= location.distance
-                            span.col-4 Rating
+                        p.row.card-text.justify-content-between.text-left
+                            span.col-10= location.address
+                            span.col-5 Rating
                             +outputRating(location.rating)
                             each facility in location.facilities
                                 span.col-4.material-icons.md-dark.text-center= facility
-                        a.col-4.d-grid.mx-auto.btn.btn-dark Go
+                        a(href=`/location/${location._id}`).col-4.d-grid.mx-auto.btn.btn-dark Go

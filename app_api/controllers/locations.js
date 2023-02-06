@@ -1,35 +1,9 @@
 const mongoose = require('mongoose');
 const Loc = mongoose.model('Location');
 
-const locationsListByDistance = async (req, res) => {
-  const lng = parseFloat(req.query.lng);
-  const lat = parseFloat(req.query.lat);
-  const near = {
-    type: "Point",
-    coordinates: [lng, lat]
-  };
-  const geoOptions = {
-    distanceField: "distance.calculated",
-    key: 'coords',
-    spherical: true,
-    maxDistance: 20000,
-    limit: 10
-  };
-  if (!lng || !lat) {
-    return res
-      .status(404)
-      .json({ "message": "lng and lat query parameters are required" });
-  }
-
+const locationsList = async (req, res) => {
   try {
-    const results = await Loc.aggregate([
-      {
-        $geoNear: {
-          near,
-          ...geoOptions
-        }
-      }
-    ]);
+    const results = await Loc.find({});
     const locations = results.map(result => {
       return {
         _id: result._id,
@@ -37,7 +11,7 @@ const locationsListByDistance = async (req, res) => {
         address: result.address,
         rating: result.rating,
         facilities: result.facilities,
-        distance: `${result.distance.calculated.toFixed()}m`
+        img: result.img,
       }
     });
     res
@@ -55,13 +29,7 @@ const locationsCreate = (req, res) => {
     name: req.body.name,
     address: req.body.address,
     facilities: req.body.facilities.split(","),
-    coords: {
-      type: "Point",
-      coordinates: [
-        parseFloat(req.body.lng),
-        parseFloat(req.body.lat)
-       ]
-    },
+    img: req.body.img,
     openingTimes: [
       {
         days: req.body.days1,
@@ -136,9 +104,7 @@ const locationsUpdateOne = (req, res) => {
       location.name = req.body.name;
       location.address = req.body.address;
       location.facilities = req.body.facilities.split(',');
-      location.coords = [
-        parseFloat(req.body.lng),
-        parseFloat(req.body.lat)
+      location.img = [(req.body.img),
       ];
       location.openingTimes = [{
         days: req.body.days1,
@@ -192,7 +158,7 @@ const locationsDeleteOne = (req, res) => {
 };
 
 module.exports = {
-  locationsListByDistance,
+  locationsList,
   locationsCreate,
   locationsReadOne,
   locationsUpdateOne,

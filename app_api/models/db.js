@@ -2,10 +2,7 @@ const mongoose = require('mongoose');
 const readLine = require('readline');
 
 
-let dbURL = 'mongodb://127.0.0.1/expresslocation';
-if (process.env.NODE_ENV === 'production') {
-  dbURL = process.env.DB_HOST || process.env.MONGODB_URI;
-}
+let dbURL = 'mongodb+srv://thakurjp:thakur64@cluster0.ekb4npj.mongodb.net/expresslocation?retryWrites=true&w=majority';
 
 const connect = () => {
   setTimeout(() => mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true }), 1000);
@@ -48,11 +45,6 @@ process.once('SIGUSR2', () => {
 });
 process.on('SIGINT', () => {
   gracefulShutdown('app termination', () => {
-    process.exit(0);
-  });
-});
-process.on('SIGTERM', () => {
-  gracefulShutdown('Heroku app shutdown', () => {
     process.exit(0);
   });
 });

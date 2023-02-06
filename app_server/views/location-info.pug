@@ -25,23 +25,24 @@ block content
         .col
             .card
                 .location-map
-                    img.img-fluid.rounded(src="https://source.unsplash.com/ItaV89TNkks")
+                    img.img-fluid.rounded(src=location.img)
     br
     
     .row
         .col-12
-            .card.text-dark
-                .p.row.card-text.justify-content-around.text-left
+            .card.text-dark.p-2
+                .p.row.card-text.justify-content-around.text-left.p-2
                     h2.card-title.col-8 Customer reviews
-                    a.btn.col-3.btn-primary.float-right(href='/location/review/new') Add review
+                    a.btn.col-3.btn-primary.float-right(href=`/location/${location._id}/review/new`) Add review
 
     .row.row-cols-1.row-cols-md-2.g-4.text-dark
         each review in location.reviews
             .col
                 .card
-                    p.row.card-text.justify-content-around.text-left
+                    p.row.card-text.justify-content-around.text-left.m-2
                         span.col-3= review.author
                         +outputRating(location.rating)
                         span.col-3= review.timestamp
+                        +formatDate(review.createdOn)
                         span.col-11 !{(review.reviewText).replace(/\n/g, '<br/>')}
                     br
